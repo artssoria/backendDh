@@ -3,7 +3,7 @@
 [Trello](https://trello.com/invite/b/3MSa9A0k/ATTI65f169fc50493bab56470a22ebf37d7117C95FA6/practicas-profesionalizantes)
 
 # Frontend
-Este es el archivo principal del repositorio. Puedes visitar el [FrontEnd en Vite js](/main/frontend/README.md) para obtener más información.
+Este es el archivo principal del repositorio. Puedes visitar el [FrontEnd en Vite js](/frontend/README.md) para obtener más información.
 
 # BackendDH
 
