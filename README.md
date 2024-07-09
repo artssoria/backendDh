@@ -64,22 +64,87 @@ Este repositorio contiene el backend de un proyecto desarrollado en Node.js con 
 ### Aspirante
 models/aspirante.js
 ```javascript
-const Aspirante = sequelize.define('Aspirante', {
-  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-  dni: { type: DataTypes.STRING(20), allowNull: false, unique: true },
-  nombre: { type: DataTypes.STRING(50), allowNull: false },
-  apellido: { type: DataTypes.STRING(50), allowNull: false },
-  email: { type: DataTypes.STRING(100), allowNull: false, unique: true, validate: { isEmail: true } },
-  telefono: { type: DataTypes.STRING(20), allowNull: false },
-  perfil_linkedin: { type: DataTypes.STRING(255), allowNull: false },
-  fecha_nacimiento: { type: DataTypes.DATEONLY, allowNull: false },
-  sexo: { type: DataTypes.ENUM('Masculino', 'Femenino', 'Otro'), allowNull: false },
-  imagen: { type: DataTypes.BLOB('long'), allowNull: true },
-  profesion: { type: DataTypes.STRING(100), allowNull: false }
+const Applicants = sequelize.define('Applicants', {
+  id_applicants: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  created_at: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW
+  },
+  updated_at: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW
+  },
+  deleted_at: {
+    type: DataTypes.DATE,
+    allowNull: true
+  },
+  dni: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  first_name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  last_name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+    validate: {
+      isEmail: true
+    }
+  },
+  phone_number: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  url_linkedin: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  birthdate: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
+  sex: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  image: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  id_location: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  id_profession: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  }
 }, {
-  tableName: 'aspirantes',
-  timestamps: false
+  tableName: 'applicants',
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  paranoid: true, 
+  deletedAt: 'deleted_at'
 });
+Applicants.belongsTo(Location, { foreignKey: 'id_location' });
+Applicants.belongsTo(Profession, { foreignKey: 'id_profession' });
+
+module.exports = Applicants;
 ```
 
 ## Endpoints de la API
@@ -92,18 +157,22 @@ const Aspirante = sequelize.define('Aspirante', {
     ```json
     [
         {
-            "id": 1,
-            "dni": "12345678",
-            "nombre": "Aspirante 1",
-            "apellido": "Apellido 1",
-            "email": "aspirante1@example.com",
-            "telefono": "123456789",
-            "perfil_linkedin": "https://linkedin.com/in/aspirante1",
-            "fecha_nacimiento": "1990-01-01",
-            "sexo": "Masculino",
-            "imagen": null,
-            "profesion": "Profesión 1"
-        },
+      "id_applicants": 4,
+      "created_at": "2024-07-09T14:25:51.000Z",
+      "updated_at": "2024-07-09T16:28:04.000Z",
+      "deleted_at": null,
+      "dni": "12343678",
+      "first_name": "Ruben",
+      "last_name": "Carlos",
+      "email": "juan.perez@example.com",
+      "phone_number": "1234567890",
+      "url_linkedin": "https://linkedin.com/in/juanperez",
+      "birthdate": "1990-01-01T00:00:00.000Z",
+      "sex": "M",
+      "image": "url_de_imagen",
+      "id_location": 1,
+      "id_profession": 1
+    },
         ...
     ]
     ```
@@ -115,32 +184,35 @@ const Aspirante = sequelize.define('Aspirante', {
 - **Cuerpo de la solicitud:**
     ```json
     {
-        "dni": "87654321",
-        "nombre": "Nuevo Aspirante",
-        "apellido": "Nuevo Apellido",
-        "email": "nuevoaspirante@example.com",
-        "telefono": "987654321",
-        "perfil_linkedin": "https://linkedin.com/in/nuevoaspirante",
-        "fecha_nacimiento": "1995-05-05",
-        "sexo": "Femenino",
-        "imagen": null,
-        "profesion": "Nueva Profesión"
+       
+  "dni": "19283942",
+  "first_name": "ruben",
+  "last_name": "nestor",
+  "email": "ruben.nestor@example.com",
+  "phone_number": "1234567890",
+  "url_linkedin": "https://linkedin.com/in/rubennestor",
+  "birthdate": "1990-01-01",
+  "sex": "F",
+  "image": "url_de_imagen",
+  "id_location": 4,
+  "id_profession": 2
+
     }
     ```
 - **Ejemplo de respuesta:**
     ```json
     {
-        "id": 2,
-        "dni": "87654321",
-        "nombre": "Nuevo Aspirante",
-        "apellido": "Nuevo Apellido",
-        "email": "nuevoaspirante@example.com",
-        "telefono": "987654321",
-        "perfil_linkedin": "https://linkedin.com/in/nuevoaspirante",
-        "fecha_nacimiento": "1995-05-05",
-        "sexo": "Femenino",
-        "imagen": null,
-        "profesion": "Nueva Profesión"
+        "dni": "19283942",
+  "first_name": "ruben",
+  "last_name": "nestor",
+  "email": "ruben.nestor@example.com",
+  "phone_number": "1234567890",
+  "url_linkedin": "https://linkedin.com/in/rubennestor",
+  "birthdate": "1990-01-01",
+  "sex": "F",
+  "image": "url_de_imagen",
+  "id_location": 4,
+  "id_profession": 2
     }
     ```
 
@@ -151,32 +223,41 @@ const Aspirante = sequelize.define('Aspirante', {
 - **Cuerpo de la solicitud:**
     ```json
     {
-        "dni": "87654321",
-        "nombre": "Aspirante Actualizado",
-        "apellido": "Apellido Actualizado",
-        "email": "aspiranteactualizado@example.com",
-        "telefono": "987654321",
-        "perfil_linkedin": "https://linkedin.com/in/aspiranteactualizado",
-        "fecha_nacimiento": "1995-05-05",
-        "sexo": "Femenino",
-        "imagen": null,
-        "profesion": "Profesión Actualizada"
+      "id_applicants": 10,
+      "created_at": "2024-07-09T16:33:56.000Z",
+      "updated_at": "2024-07-09T16:33:56.000Z",
+      "deleted_at": null,
+      "dni": "19283942",
+      "first_name": "nestor",
+      "last_name": "bloque",
+      "email": "nestor.enbloque@example.com",
+      "phone_number": "1234567890",
+      "url_linkedin": "https://linkedin.com/in/nestorenbloque",
+      "birthdate": "1990-01-01T00:00:00.000Z",
+      "sex": "M",
+      "image": "url_de_imagen",
+      "id_location": 3,
+      "id_profession": 1
     }
     ```
 - **Ejemplo de respuesta:**
     ```json
     {
-        "id": 1,
-        "dni": "87654321",
-        "nombre": "Aspirante Actualizado",
-        "apellido": "Apellido Actualizado",
-        "email": "aspiranteactualizado@example.com",
-        "telefono": "987654321",
-        "perfil_linkedin": "https://linkedin.com/in/aspiranteactualizado",
-        "fecha_nacimiento": "1995-05-05",
-        "sexo": "Femenino",
-        "imagen": null,
-        "profesion": "Profesión Actualizada"
+      "id_applicants": 10,
+      "created_at": "2024-07-09T16:33:56.000Z",
+      "updated_at": "2024-07-09T16:33:56.000Z",
+      "deleted_at": null,
+      "dni": "19283942",
+      "first_name": "nestor",
+      "last_name": "bloque",
+      "email": "nestor.enbloque@example.com",
+      "phone_number": "1234567890",
+      "url_linkedin": "https://linkedin.com/in/nestorenbloque",
+      "birthdate": "1990-01-01T00:00:00.000Z",
+      "sex": "M",
+      "image": "url_de_imagen",
+      "id_location": 3,
+      "id_profession": 1
     }
     ```
 
