@@ -16,8 +16,8 @@ Este repositorio contiene el backend de un proyecto desarrollado en Node.js con 
 
 1. Clona el repositorio:
     ```bash
-    git clone https://github.com/artssoria/backendDh.git
-    cd backendDh
+    git clone https://github.com/artssoria/pp_grupo3.git
+    cd pp_grupo3
     ```
 
 2. Instala las dependencias:
