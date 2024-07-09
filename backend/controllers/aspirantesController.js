@@ -1,4 +1,4 @@
-const Aspirante = require('../models/aspirante');
+const Aspirante = require('../models/applicants');
 
 exports.getAspirantes = async (req, res) => {
   try {
@@ -29,16 +29,15 @@ exports.addAspirante = async (req, res) => {
   }
 };
 
-// Método PUT para actualizar un aspirante
 exports.updateAspirante = async (req, res) => {
   try {
     const aspiranteId = req.params.id;
     const [updated] = await Aspirante.update(req.body, {
-      where: { id: aspiranteId }
+      where: { id_applicants: aspiranteId }
     });
 
     if (updated) {
-      const updatedAspirante = await Aspirante.findOne({ where: { id: aspiranteId } });
+      const updatedAspirante = await Aspirante.findByPk(aspiranteId);
       res.status(200).json({
         meta: {
           status: 200,
@@ -53,12 +52,11 @@ exports.updateAspirante = async (req, res) => {
   }
 };
 
-// Método DELETE para eliminar un aspirante
 exports.deleteAspirante = async (req, res) => {
   try {
     const aspiranteId = req.params.id;
     const deleted = await Aspirante.destroy({
-      where: { id: aspiranteId }
+      where: { id_applicants: aspiranteId }
     });
 
     if (deleted) {
