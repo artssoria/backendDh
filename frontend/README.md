@@ -1,8 +1,33 @@
-# React + Vite
+# Frontend del Proyecto
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este es el frontend de nuestro proyecto, desarrollado con React y Vite, y estilizado con Tailwind CSS.
 
-Currently, two official plugins are available:
+## Requisitos Previos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js (versión 14.x o superior)
+- npm (versión 6.x o superior) , Tailwind css
+
+## Instalación
+
+1. Clona el repositorio:
+    ```bash
+    git clone https://github.com/artssoria/pp_grupo3.git
+    cd pp_grupo3
+    ```
+
+
+## Navega al directorio del frontend:
+
+1. cd /frontend
+   
+2. Instala las dependencias:
+    ```
+    npm install
+    ```
+## Ejecución
+
+Para ejecutar el proyecto en modo de desarrollo, utiliza el siguiente comando:
+    ```
+    npm run dev
+    ```
+Esto iniciará el servidor de desarrollo y podrás acceder a la aplicación en http://localhost:5173/
