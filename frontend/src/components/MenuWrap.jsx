@@ -13,12 +13,42 @@ const MenuWrap = () => {
         <section className="menu pt-12">
           <h3 className="text-sm uppercase text-blue-500 font-semibold">Opciones</h3>
           <ul className="block">
+            
             <li className="mt-4">
               <a href="#" className="flex items-center text-gray-500 font-semibold text-sm hover:text-gray-800">
                 <i className="bi bi-building text-base text-blue-400 mr-2"></i>
                 - Empresas
               </a>
             </li>
+
+            <li className="mt-4">
+              <a href="#" className="flex items-center text-gray-500 font-semibold text-sm hover:text-gray-800">
+                <i className="bi bi-person text-base text-blue-400 mr-2"></i>
+                - Aspirantes
+              </a>
+            </li>
+
+            <li className="mt-4">
+              <a href="#" className="flex items-center text-gray-500 font-semibold text-sm hover:text-gray-800">
+                <i className="bi bi-list-check text-base text-blue-400 mr-2"></i>
+                - Profesiones
+              </a>
+            </li>
+
+            <li className="mt-4">
+              <a href="#" className="flex items-center text-gray-500 font-semibold text-sm hover:text-gray-800">
+                <i className="bi bi-person-vcard text-base text-blue-400 mr-2"></i>
+                - Postulate aquí
+              </a>
+            </li>
+
+            <li className="mt-4">
+              <a href="#" className="flex items-center text-gray-500 font-semibold text-sm hover:text-gray-800">
+                <i className="bi bi-chat-left-text text-base text-blue-400 mr-2"></i>
+                - Contacto
+              </a>
+            </li>
+
             {/* Agrega más elementos de menú aquí */}
           </ul>
         </section>
