@@ -274,6 +274,13 @@ module.exports = Applicants;
         "mensaje": "Aspirante eliminado exitosamente"
     }
     ```
+## Pruebas de endpoint de Locations
+- **URL:** `http://localhost:3000/api/locations/cities`
+- **URL:** `http://localhost:3000/api/locations/provinces`
+- **URL:** `http://localhost:3000/api/locations/departments`
+- **Método:** `GET`
+- **Descripción:** Visualiza las ciudades, provincias y departamentos de argentina.
+
 
 ## Contribución
 
