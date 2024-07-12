@@ -248,8 +248,91 @@
 				</div>
 			</section>
 			<!--Fin sección profesiones-->
+			<section class="content registro">
+				<header className="preventa">
+					<h2 className="text-2xl">Registrarse</h2>
+					<p className="text-center text-lg">Para administrativos, profesionales y técnicos. Gracias por su colaboración</p>
+				</header>
+				<form action="" class="p-3 mb-5 text-center">
+					<div>
+						<label for="dni">Dni</label>
+                		<input type="text" name="dni" id="dni" placeholder="Dni" required>
+					</div>
+					<div>
+						<label for="nombre">Nombre</label>
+                		<input type="text" name="nombre" id="nombre" placeholder="Nombre" required>
+					</div>
+					<div>
+						<label for="apellido">Apellido</label>
+						<input type="text" name="apellido" id="apellido" placeholder="Apellido" required>
+					</div>
+					<div>
+						<label for="email">E-mail</label>
+						<input type="email" name="email" id="email" placeholder="E-mail" required>
+					</div>
+					<div>
+						<label for="telefono">Teléfono</label>
+						<input type="text" name="telefono" id="telefono" placeholder="N° de Teléfono" required>
+					</div>
+					<div>
+						<label for="perfil">Perfil URL de Linkedin</label>
+						<input type="url" name="perfil" id="perfil" placeholder="" required>
+					</div>
+					<div>
+						<label for="fecha_nac">Fecha de Nacimiento</label>
+						<input type="date" name="fecha_nac" id="fecha_nac" placeholder="" required>
+					</div>
+					<div>
+						<label for="sexo">Sexo</label>
+						<select name="sexo" id="sexo" required>
+							<option value="M">Masculino</option>
+							<option value="F">Femenino</option>
+							<option value="X">No Binario</option>
+						</select>
+					</div>
+					<div>
+						<label for="imagen">Imagen de perfil</label>
+						<input class="imagen" type="file" name="userAvatar" id="image">
+					</div>
+					<div>
+						<label for="profesion">Profesión</label>
+						<select name="profesion" id="image" required>
+							<option value="Profesor">Profesor</option>
+							<option value="Abogado">Abogado</option>
+							<option value="Arquitecto">Arquitecto</option>
+							<option value="Botanico">Botánico</option>
+							<option value="Computista">Computista</option>
+							<option value="Economista">Economista</option>
+							<option value="Administrador">Administrador</option>
+							<option value="Linguista">Linguista</option>
+							<option value="Técnico de sonido">Técnico de sonido</option>
+						</select>
+					</div>
+					<div>
+						<label for="city">Ciudad</label>
+						<select name="city" id="city" required>
+							<option value="">seleccionar</option>
+						</select>
+					</div>
+					<div>
+						<label for="department">departamento</label>
+						<select name="department" id="department" required>
+							<option value="">seleccionar</option>
+						</select>
+					</div>
+					<div>
+						<label for="province">provincia</label>
+						<select name="province" id="province" required>
+							<option value="">seleccionar</option>
+						</select>
+					</div>
+					<button type="submit" class="btn-register">Registrarse</button>
+				</form>
+			</section>
 		</main>
 		<!--Fin Sección contenido-->
+		<!--Registro-->
+
 	</div>
 	<!--Fin Dashboard-->
 </body>
