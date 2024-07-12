@@ -1,5 +1,7 @@
 import React from 'react';
-
+import ContentAspirantes from './ContentAspirantes';
+import ContentProfesiones from './ContentProfesiones';
+import RegisterWrap from './RegisterWrap';
 const ContentWrap = () => {
   return (
     <main className="content-wrap col-span-9 row-span-11 px-12 overflow-auto">
@@ -10,6 +12,9 @@ const ContentWrap = () => {
           <img src="./assets/img/banner.jpg" alt="Recursos Humanos" />
         </div>
       </header>
+      <ContentAspirantes/>
+      <ContentProfesiones/>
+      <RegisterWrap/>
       {/* Agrega más secciones aquí */}
     </main>
   );
