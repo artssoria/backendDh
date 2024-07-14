@@ -26,8 +26,7 @@ exports.addAspirante = async (req, res) => {
     url_linkedin,
     birthdate,
     image,
-    id_location,
-    id_profession } = req.body
+    id_location } = req.body
 
   try {
     console.log(req.body)
@@ -40,7 +39,7 @@ exports.addAspirante = async (req, res) => {
       url_linkedin:url_linkedin,
       birthdate:birthdate,
       image:'asd',
-      id_location:1,
+      id_location:id_location,
     })
     console.log(newApplicant)
   }
