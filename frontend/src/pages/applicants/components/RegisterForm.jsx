@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 //import applicantsFetching from "../../datafetch/applicantsFetch";
+import locationFetching from "../../../datafetch/locationsFetch"
+import departmentsFetching from "../../../datafetch/departmentsFetch"
+import citiesFetching from "../../../datafetch/citiesFetch"
 
 const RegisterForm = () => {
 
@@ -11,10 +14,62 @@ const RegisterForm = () => {
   const [url_linkedin, seturl_linkedin] = useState('');
   const [birthdate, setbirthdate] = useState('');
   const [image, setimage] = useState('');
-  const [id_location, setid_location] = useState('');
-  const [id_profession, seid_profession] = useState('');
+  
 
+  const [provinces, setProvinces] = useState([]);
+  const [selectedProvince, setSelectedProvince] = useState("");
+  const [departments, setDepartments] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [cities, setCities] = useState([]);
+  const [id_location, setSelectedCity] = useState('');
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await locationFetching.getAllProvinces();
+        setProvinces(data)
+        console.log(data)
+        console.log(provinces)
+      }
+      catch {
+
+      }
+
+    };
+    fetchData()
+  }, []);
+
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        if (selectedProvince) {
+          const data = await departmentsFetching.getAllDepartments(selectedProvince);
+          setDepartments(data);
+        } else {
+          setDepartments([]);
+        }
+      } catch (error) {
+        console.error("Error fetching departments:", error);
+      }
+    };
+    fetchDepartments();
+  }, [selectedProvince]);
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        if (selectedDepartment) {
+          const data = await citiesFetching.getAllCities(selectedDepartment);
+          setCities(data);
+        } else {
+          setCities([]);
+        }
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+      }
+    };
+    fetchCities();
+  }, [selectedDepartment]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,8 +88,7 @@ const RegisterForm = () => {
         url_linkedin,
         birthdate,
         image,
-        id_location,
-        id_profession
+        id_location
       })
 
     })
@@ -130,7 +184,7 @@ const RegisterForm = () => {
           </div>
           <div className="col-4 mb-3">
             <label>Profesiones</label>
-            <select className="w-100 form-control" name="profesion" id="image" value={id_profession}>
+            <select className="w-100 form-control" name="profesion" id="image">
               <option value="Profesor">Profesor</option>
               <option value="Abogado">Abogado</option>
               <option value="Arquitecto">Arquitecto</option>
@@ -144,23 +198,71 @@ const RegisterForm = () => {
           </div>
           <div className="col-4 mb-3">
             <label>Provincia</label>
-            <select className="w-100 form-control" name="province" id="province">
-              <option value="Seleccione">Seleccione</option>
+            <select
+              className="w-100 form-control"
+              name="province"
+              id="province"
+              value={selectedProvince}
+              onChange={(e) => {
+                setSelectedProvince(e.target.value);
+                setSelectedDepartment("");
+              }}
+            >
+              <option value="">Seleccione</option>
+              {provinces.length > 0 ? (
+                provinces.map((province, index) => (
+                  <option key={index} value={province.province}>
+                    {province.province}
+                  </option>
+                ))
+              ) : (
+                <option value="">Cargando...</option>
+              )}
             </select>
           </div>
           <div className="col-4 mb-3">
             <label>Departamento</label>
-            <select className="w-100 form-control"name="department" id="department">
-              <option value="Seleccione">Seleccione</option>
+            <select
+              className="w-100 form-control"
+              name="department"
+              id="department"
+              value={selectedDepartment}
+              onChange={(e) => setSelectedDepartment(e.target.value)}
+            >
+              <option value="">Seleccione</option>
+              {departments.length > 0 ? (
+                departments.map((department, index) => (
+                  <option key={index} value={department.department}>
+                    {department.department}
+                  </option>
+                ))
+              ) : (
+                <option value="">Cargando...</option>
+              )}
             </select>
           </div>
           <div className="col-4 mb-3">
             <label>Localidad</label>
-            <select className="w-100 form-control" name="city" id="city">
-              <option  value={id_location}>Seleccione</option>
+            <select
+              className="w-100 form-control"
+              name="city"
+              id="city"
+              value={id_location}
+              onChange={(e) => setSelectedCity(e.target.value)}
+            >
+              <option value="">Seleccione</option>
+              {cities.length > 0 ? (
+                cities.map((city, index) => (
+                  <option key={index} value={city.id_location}>
+                    {city.city}
+                  </option>
+                ))
+              ) : (
+                <option value="">Cargando...</option>
+              )}
             </select>
           </div>
-          <p/>
+          <p />
           <div className="col-5 mb-3">
             <button className="btn btn-outline-primary w-100 form-control" type="submit">Registrar</button>
           </div>

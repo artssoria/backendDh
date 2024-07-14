@@ -1,7 +1,7 @@
 const locationsFetching = {
-    getAllApplicants : async () => {
+    getAllProvinces : async () => {
         try{
-            const res = await fetch("http://localhost:3000/api/locations", {
+            const res = await fetch("http://localhost:3000/api/locations/provinces", {
                 //credentials: 'include', // Incluye cookies en la solicitud
                 method: 'GET',
                 headers: {
@@ -13,9 +13,9 @@ const locationsFetching = {
             return data;
         }
         catch (error) {
-            console.error('Error fetching aspirantes:', error);
+            console.error('Error fetching provinces:', error);
         }
     }
 }
 
-export default applicantsFetching;
+export default locationsFetching;
