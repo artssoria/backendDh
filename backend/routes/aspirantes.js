@@ -4,7 +4,7 @@ const aspirantesController = require('../controllers/aspirantesController');
 
 router.get('/', aspirantesController.getAspirantes);
 router.post('/', aspirantesController.addAspirante);
-router.put('/:id', aspirantesController.updateAspirante);
-router.delete('/:id', aspirantesController.deleteAspirante);
+// router.put('/:id', aspirantesController.updateAspirante);
+// router.delete('/:id', aspirantesController.deleteAspirante);
 
 module.exports = router;

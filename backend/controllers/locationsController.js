@@ -1,11 +1,9 @@
-const Locations = require('../models/locations');
+const db = require('../models');
+const sequelize = db.sequelize;
 
 exports.getProvinces = async (req, res) => {
   try {
-    const provinces = await Locations.findAll({
-      attributes: ['province'],
-      group: ['province']
-    });
+    const provinces = await Locations.findAll();
     res.json(provinces);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -14,6 +12,7 @@ exports.getProvinces = async (req, res) => {
 
 exports.getDepartments = async (req, res) => {
   try {
+    const province = req.params.province
     const departments = await Locations.findAll({
       attributes: ['department'],
       group: ['department']

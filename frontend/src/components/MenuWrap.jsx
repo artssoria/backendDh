@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const MenuWrap = () => {
   return (
     <header className="menu-wrap col-span-3 row-span-11 bg-white border-r border-gray-200 overflow-auto">
@@ -24,16 +25,16 @@ const MenuWrap = () => {
                 href="#"
                 className="flex items-center text-gray-500 font-semibold text-sm hover:text-gray-800">
                 <i className="bi bi-building text-base text-blue-400 mr-2"></i>{" "}
-                - Empresas
+                - Home
               </a>
             </li>
             <li className="mt-4">
-              <a
-                href="#"
+              <Link
+                to="applicants"
                 className="flex items-center text-gray-500 font-semibold text-sm hover:text-gray-800">
                 <i className="bi bi-person text-base text-blue-400 mr-2"></i> -
                 Aspirantes
-              </a>
+              </Link>
             </li>
             <li className="mt-4">
               <a
@@ -44,12 +45,12 @@ const MenuWrap = () => {
               </a>
             </li>
             <li className="mt-4">
-              <a
-                href="#"
+              <Link
+                to="register"
                 className="flex items-center text-gray-500 font-semibold text-sm hover:text-gray-800">
                 <i className="bi bi-person-vcard text-base text-blue-400 mr-2"></i>{" "}
                 - Postulate aquí
-              </a>
+              </Link>
             </li>
             <li className="mt-4">
               <a

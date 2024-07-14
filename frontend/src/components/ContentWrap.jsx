@@ -1,6 +1,5 @@
 import Aspirantes from "./Aspirantes";
 import Profesiones from "./Profesiones";
-import Registro from "./Registro";
 
 const ContentWrap = () => {
   return (
@@ -17,7 +16,6 @@ const ContentWrap = () => {
       </header>
       <Aspirantes />
       <Profesiones />
-      <Registro />
     </main>
   );
 };

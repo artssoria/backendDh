@@ -1,4 +1,5 @@
-const Aspirantes = () => {
+
+const Applicants = () => {
   return (
     <section className="content aspirantes">
       <h2>Aspirantes</h2>
@@ -47,4 +48,4 @@ const Aspirantes = () => {
   );
 };
 
-export default Aspirantes;
+export default Applicants;
