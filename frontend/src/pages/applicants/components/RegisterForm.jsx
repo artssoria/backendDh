@@ -14,7 +14,9 @@ const RegisterForm = () => {
   const [url_linkedin, seturl_linkedin] = useState('');
   const [birthdate, setbirthdate] = useState('');
   const [image, setimage] = useState('');
-  
+  const [sex, setsex] = useState('');
+  const [id_profession, setidprofession] = useState('');
+
 
   const [provinces, setProvinces] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState("");
@@ -87,8 +89,10 @@ const RegisterForm = () => {
         phone_number,
         url_linkedin,
         birthdate,
+        sex,
         image,
-        id_location
+        id_location,
+        id_profession
       })
 
     })
@@ -102,16 +106,7 @@ const RegisterForm = () => {
     <form className="mt-5" onSubmit={handleSubmit}>
       <div className="container text-center">
         <div className="row justify-content-center">
-          <div className="col-4 mb-3">
-            <label>DNI</label>
-            <input
-              className="w-100 form-control"
-              type="number"
-              value={dni}
-              onChange={(e) => setdni(e.target.value)}
-            />
-          </div>
-          <div className="col-4 mb-3">
+          <div className="col-6 mb-3">
             <label>Nombre</label>
             <input
               className="w-100 form-control"
@@ -120,13 +115,22 @@ const RegisterForm = () => {
               onChange={(e) => setfirst_name(e.target.value)}
             />
           </div>
-          <div className="col-4 mb-3">
+          <div className="col-6 mb-3">
             <label>Apellido</label>
             <input
               className="w-100 form-control"
               type="text"
               value={last_name}
               onChange={(e) => setlast_name(e.target.value)}
+            />
+          </div>
+          <div className="col-4 mb-3">
+            <label>DNI</label>
+            <input
+              className="w-100 form-control"
+              type="number"
+              value={dni}
+              onChange={(e) => setdni(e.target.value)}
             />
           </div>
           <div className="col-4 mb-3">
@@ -148,15 +152,6 @@ const RegisterForm = () => {
             />
           </div>
           <div className="col-4 mb-3">
-            <label>URL de LinkedIn</label>
-            <input
-              className="w-100 form-control"
-              type="url"
-              value={url_linkedin}
-              onChange={(e) => seturl_linkedin(e.target.value)}
-            />
-          </div>
-          <div className="col-4 mb-3">
             <label>Fecha de Nacimiento</label>
             <input
               className="w-100 form-control"
@@ -167,24 +162,27 @@ const RegisterForm = () => {
           </div>
           <div className="col-4 mb-3">
             <label>Sexo</label>
-            <select className="w-100 form-control" name="sex" value={birthdate}>
-              <option value="Masculino">Masculino</option>
-              <option value="Femenino">Femenino</option>
-              <option value="No Binario">No Binario</option>
+            <select
+              className="w-100 form-control"
+              name="sex"
+              value={sex}
+              onChange={(e) => setsex(e.target.value)}
+            >
+              <option value="">Seleccione</option>
+              <option value="M">Masculino</option>
+              <option value="F">Femenino</option>
+              <option value="X">No Binario</option>
             </select>
           </div>
           <div className="col-4 mb-3">
-            <label>Imagen de Perfil</label>
-            <input
-              className="w-100 form-control form-control"
-              type="file"
-              value={image}
-              onChange={(e) => setimage(e.target.value)}
-            />
-          </div>
-          <div className="col-4 mb-3">
             <label>Profesiones</label>
-            <select className="w-100 form-control" name="profesion" id="image">
+            <select
+              className="w-100 form-control"
+              name="profession"
+              value={id_profession}
+              onChange={(e) => setidprofession(e.target.value)}
+            > // falta completar esta parte para que traiga las profesiones que están en la base de datos
+              <option value="">Seleccione</option>
               <option value="Profesor">Profesor</option>
               <option value="Abogado">Abogado</option>
               <option value="Arquitecto">Arquitecto</option>
@@ -262,7 +260,25 @@ const RegisterForm = () => {
               )}
             </select>
           </div>
-          <p />
+          <div className="col-6 mb-3">
+            <label>Imagen de Perfil</label>
+            <input
+              className="w-100 form-control form-control"
+              type="file"
+              value={image}
+              onChange={(e) => setimage(e.target.value)}
+            />
+          </div>
+          <div className="col-6 mb-3">
+            <label>URL de LinkedIn</label>
+            <input
+              className="w-100 form-control"
+              type="url"
+              value={url_linkedin}
+              onChange={(e) => seturl_linkedin(e.target.value)}
+              placeholder="https://www.linkedin.com/"
+            />
+          </div>
           <div className="col-5 mb-3">
             <button className="btn btn-outline-primary w-100 form-control" type="submit">Registrar</button>
           </div>

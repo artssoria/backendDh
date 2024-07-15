@@ -21,12 +21,12 @@ const MenuWrap = () => {
           </h3>
           <ul className="block">
             <li className="mt-4">
-              <a
-                href="#"
+              <Link
+                to=""
                 className="flex items-center text-gray-500 font-semibold text-sm hover:text-gray-800">
                 <i className="bi bi-building text-base text-blue-400 mr-2"></i>{" "}
                 - Home
-              </a>
+              </Link>
             </li>
             <li className="mt-4">
               <Link
