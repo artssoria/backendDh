@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const methodOverride =  require('method-override');
 const sequelize = require('./config/database');
 const aspirantesRoutes = require('./routes/aspirantes');
 const locationsRoutes = require('./routes/locationsRoutes');
@@ -13,6 +14,8 @@ const port = 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use(methodOverride('_method'));
+app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/aspirantes', aspirantesRoutes);
 app.use('/api/locations', locationsRoutes);

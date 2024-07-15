@@ -127,11 +127,15 @@ const RegisterWrap = ()=>{
 					<div>
 						<label htmlFor="profesion">Profesión</label>
 						<select name="profesion" id="image" value={formData.name_profession} required>
-                            {professions.map(job =>(
-                                <option key={job.cca3} value={job.name_profession}> 
-                                    {job.name_profession}
-                                </option>
-                            ))}
+							<option value="Profesor">Profesor</option>
+							<option value="Abogado">Abogado</option>
+							<option value="Arquitecto">Arquitecto</option>
+							<option value="Botanico">Botánico</option>
+							<option value="Computista">Computista</option>
+							<option value="Economista">Economista</option>
+							<option value="Administrador">Administrador</option>
+							<option value="Linguista">Linguista</option>
+							<option value="Técnico de sonido">Técnico de sonido</option>
                             {errors.name_profession && <p className='text-danger'>{errors.name_profession}</p>}
 						</select>
 					</div>
@@ -150,22 +154,12 @@ const RegisterWrap = ()=>{
 						<label htmlFor="department">Department</label>
                         <select name="department" id="department" value={formData.department} required>
                             <option value="">Seleccione</option>
-                            {departments.map(locations =>(
-                                <option key={locations.cca3} value={locations.department}> 
-                                    {locations.department}
-                                </option>
-                            ))}
                         </select>
 					</div>
                     <div>
 						<label htmlFor="province">Province</label>
                         <select name="province" id="province" value={formData.province} required>
                             <option value="">Seleccione</option>
-                            {provinces.map(locations =>(
-                                <option key={locations.cca3} value={locations.province}> 
-                                    {locations.province}
-                                </option>
-                            ))}
                         </select>
 					</div>
 
