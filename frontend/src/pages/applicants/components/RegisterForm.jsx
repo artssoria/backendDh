@@ -37,7 +37,7 @@ const RegisterForm = () => {
 
         const datap = await professionsFetching.getAllProfessions();
         setprofessions(datap)
-        console.log(datap)
+        console.log(professions)
       }
       catch {
 
@@ -104,7 +104,7 @@ const RegisterForm = () => {
     })
 
     const data = await res.json(); // Esto sirve para que el servidor me devuelva una respuesta respecto al post que mande
-    console.log(data);
+    // console.log(data);
   }
 
   return (
@@ -194,7 +194,7 @@ const RegisterForm = () => {
               <option value="">Seleccione</option>
               {professions.length > 0 ? (
                 professions.map((profession, index) => (
-                  <option key={index} value={professions.id}>
+                  <option key={index} value={profession.id_profession}>
                     {profession.name_profession}
                   </option>
                 ))

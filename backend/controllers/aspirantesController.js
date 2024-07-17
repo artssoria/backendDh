@@ -17,7 +17,8 @@ exports.getAspirantes = async (req, res) => {
 
 exports.addAspirante = async (req, res) => {
 
-  const { dni,
+  const {
+    dni,
     first_name,
     last_name,
     email,
@@ -25,7 +26,8 @@ exports.addAspirante = async (req, res) => {
     url_linkedin,
     birthdate,
     image,
-    id_location } = req.body
+    id_location,
+    id_profession } = req.body
 
   try {
     console.log(req.body)
@@ -38,7 +40,8 @@ exports.addAspirante = async (req, res) => {
       url_linkedin:url_linkedin,
       birthdate:birthdate,
       image:'asd',
-      id_location:id_location,
+      id_location: parseInt(id_location,10),
+      id_profession: parseInt(id_profession,10)
     })
     console.log(newApplicant)
   }
@@ -46,18 +49,6 @@ exports.addAspirante = async (req, res) => {
   catch {
 
   }
-  
-//   try {
-//   const aspirante = await Aspirante.create(req.body);
-//   res.status(201).json({
-//     meta: {
-//       status: 201,
-//     },
-//     data: aspirante
-//   });
-// } catch (error) {
-//   res.status(500).json({ error: error.message });
-// }
 };
 
 // exports.updateAspirante = async (req, res) => {
