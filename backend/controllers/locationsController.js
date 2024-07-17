@@ -1,5 +1,4 @@
 const db = require('../models');
-const sequelize = db.sequelize;
 
 exports.getProvinces = async (req, res) => {
   try {
@@ -13,7 +12,6 @@ exports.getProvinces = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 exports.getDepartments = async (req, res) => {
   try {

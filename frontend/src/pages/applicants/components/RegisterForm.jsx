@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import locationFetching from "../../../datafetch/locationsFetch"
 import departmentsFetching from "../../../datafetch/departmentsFetch"
 import citiesFetching from "../../../datafetch/citiesFetch"
+import professionsFetching from "../../../datafetch/professionsFetch";
 
 const RegisterForm = () => {
 
@@ -15,6 +16,7 @@ const RegisterForm = () => {
   const [birthdate, setbirthdate] = useState('');
   const [image, setimage] = useState('');
   const [sex, setsex] = useState('');
+  const [professions, setprofessions] = useState('');
   const [id_profession, setidprofession] = useState('');
 
 
@@ -32,6 +34,10 @@ const RegisterForm = () => {
         setProvinces(data)
         console.log(data)
         console.log(provinces)
+
+        const datap = await professionsFetching.getAllProfessions();
+        setprofessions(datap)
+        console.log(datap)
       }
       catch {
 
@@ -178,20 +184,23 @@ const RegisterForm = () => {
             <label>Profesiones</label>
             <select
               className="w-100 form-control"
-              name="profession"
+              name="professions"
+              id="professions"
               value={id_profession}
-              onChange={(e) => setidprofession(e.target.value)}
-            > // falta completar esta parte para que traiga las profesiones que están en la base de datos
+              onChange={(e) => {
+                setidprofession(e.target.value);
+              }}
+            >
               <option value="">Seleccione</option>
-              <option value="Profesor">Profesor</option>
-              <option value="Abogado">Abogado</option>
-              <option value="Arquitecto">Arquitecto</option>
-              <option value="Botanico">Botánico</option>
-              <option value="Computista">Computista</option>
-              <option value="Economista">Economista</option>
-              <option value="Administrador">Administrador</option>
-              <option value="Linguista">Linguista</option>
-              <option value="Técnico de sonido">Técnico de sonido</option>
+              {professions.length > 0 ? (
+                professions.map((profession, index) => (
+                  <option key={index} value={professions.id}>
+                    {profession.name_profession}
+                  </option>
+                ))
+              ) : (
+                <option value="">Cargando...</option>
+              )}
             </select>
           </div>
           <div className="col-4 mb-3">
