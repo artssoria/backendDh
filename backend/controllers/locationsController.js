@@ -3,8 +3,11 @@ const sequelize = db.sequelize;
 
 exports.getProvinces = async (req, res) => {
   try {
-    const provinces = await Locations.findAll();
-    res.json(provinces);
+    console.log('hola')
+    const data = await db.Locations.findAll();
+    console.log('bola')
+    res.json(data);
+    console.log('lola')
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
