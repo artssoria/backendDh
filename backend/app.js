@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-const aspirantesRoutes = require('./routes/aspirantes');
+const aspirantesRoutes = require('./routes/aspirantesRoutes');
 const locationsRoutes = require('./routes/locationsRoutes');
+const professionsRoutes = require('./routes/professionsRoutes');
+
 
 // const Applicants = require('./models/applicants');
 // const Location = require('./models/locations');
@@ -15,6 +17,7 @@ app.use(express.json());
 
 app.use('/api/aspirantes', aspirantesRoutes);
 app.use('/api/locations', locationsRoutes);
+app.use('/api/professions', professionsRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

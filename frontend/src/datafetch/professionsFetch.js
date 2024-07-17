@@ -1,7 +1,7 @@
-const locationsFetching = {
-    getAllProvinces : async () => {
+const professionsFetching = {
+    getAllProfessions : async () => {
         try{
-            const res = await fetch("http://localhost:3000/api/locations/provinces", {
+            const res = await fetch("http://localhost:3000/api/professions", {
                 //credentials: 'include', // Incluye cookies en la solicitud
                 method: 'GET',
                 headers: {
@@ -10,12 +10,12 @@ const locationsFetching = {
 
             })
             const data = await res.json()
-            return data;
+            return data.data;
         }
         catch (error) {
-            console.error('Error fetching provinces:', error);
+            console.error('Error fetching profesion:', error);
         }
     }
 }
 
-export default locationsFetching;
+export default professionsFetching;

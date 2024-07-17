@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 //import applicantsFetching from "../../datafetch/applicantsFetch";
+import locationFetching from "../../../datafetch/locationsFetch"
+import departmentsFetching from "../../../datafetch/departmentsFetch"
+import citiesFetching from "../../../datafetch/citiesFetch"
+import professionsFetching from "../../../datafetch/professionsFetch";
 
 const RegisterForm = () => {
 
@@ -11,10 +15,69 @@ const RegisterForm = () => {
   const [url_linkedin, seturl_linkedin] = useState('');
   const [birthdate, setbirthdate] = useState('');
   const [image, setimage] = useState('');
-  const [id_location, setid_location] = useState('');
-  const [id_profession, seid_profession] = useState('');
+  const [sex, setsex] = useState('');
+  const [professions, setprofessions] = useState('');
+  const [id_profession, setidprofession] = useState('');
 
 
+  const [provinces, setProvinces] = useState([]);
+  const [selectedProvince, setSelectedProvince] = useState("");
+  const [departments, setDepartments] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [cities, setCities] = useState([]);
+  const [id_location, setSelectedCity] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await locationFetching.getAllProvinces();
+        setProvinces(data)
+        console.log(data)
+        console.log(provinces)
+
+        const datap = await professionsFetching.getAllProfessions();
+        setprofessions(datap)
+        console.log(datap)
+      }
+      catch {
+
+      }
+
+    };
+    fetchData()
+  }, []);
+
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        if (selectedProvince) {
+          const data = await departmentsFetching.getAllDepartments(selectedProvince);
+          setDepartments(data);
+        } else {
+          setDepartments([]);
+        }
+      } catch (error) {
+        console.error("Error fetching departments:", error);
+      }
+    };
+    fetchDepartments();
+  }, [selectedProvince]);
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        if (selectedDepartment) {
+          const data = await citiesFetching.getAllCities(selectedDepartment);
+          setCities(data);
+        } else {
+          setCities([]);
+        }
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+      }
+    };
+    fetchCities();
+  }, [selectedDepartment]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,6 +95,7 @@ const RegisterForm = () => {
         phone_number,
         url_linkedin,
         birthdate,
+        sex,
         image,
         id_location,
         id_profession
@@ -48,16 +112,7 @@ const RegisterForm = () => {
     <form className="mt-5" onSubmit={handleSubmit}>
       <div className="container text-center">
         <div className="row justify-content-center">
-          <div className="col-4 mb-3">
-            <label>DNI</label>
-            <input
-              className="w-100 form-control"
-              type="number"
-              value={dni}
-              onChange={(e) => setdni(e.target.value)}
-            />
-          </div>
-          <div className="col-4 mb-3">
+          <div className="col-6 mb-3">
             <label>Nombre</label>
             <input
               className="w-100 form-control"
@@ -66,13 +121,22 @@ const RegisterForm = () => {
               onChange={(e) => setfirst_name(e.target.value)}
             />
           </div>
-          <div className="col-4 mb-3">
+          <div className="col-6 mb-3">
             <label>Apellido</label>
             <input
               className="w-100 form-control"
               type="text"
               value={last_name}
               onChange={(e) => setlast_name(e.target.value)}
+            />
+          </div>
+          <div className="col-4 mb-3">
+            <label>DNI</label>
+            <input
+              className="w-100 form-control"
+              type="number"
+              value={dni}
+              onChange={(e) => setdni(e.target.value)}
             />
           </div>
           <div className="col-4 mb-3">
@@ -94,15 +158,6 @@ const RegisterForm = () => {
             />
           </div>
           <div className="col-4 mb-3">
-            <label>URL de LinkedIn</label>
-            <input
-              className="w-100 form-control"
-              type="url"
-              value={url_linkedin}
-              onChange={(e) => seturl_linkedin(e.target.value)}
-            />
-          </div>
-          <div className="col-4 mb-3">
             <label>Fecha de Nacimiento</label>
             <input
               className="w-100 form-control"
@@ -113,13 +168,108 @@ const RegisterForm = () => {
           </div>
           <div className="col-4 mb-3">
             <label>Sexo</label>
-            <select className="w-100 form-control" name="sex" value={birthdate}>
-              <option value="Masculino">Masculino</option>
-              <option value="Femenino">Femenino</option>
-              <option value="No Binario">No Binario</option>
+            <select
+              className="w-100 form-control"
+              name="sex"
+              value={sex}
+              onChange={(e) => setsex(e.target.value)}
+            >
+              <option value="">Seleccione</option>
+              <option value="M">Masculino</option>
+              <option value="F">Femenino</option>
+              <option value="X">No Binario</option>
             </select>
           </div>
           <div className="col-4 mb-3">
+            <label>Profesiones</label>
+            <select
+              className="w-100 form-control"
+              name="professions"
+              id="professions"
+              value={id_profession}
+              onChange={(e) => {
+                setidprofession(e.target.value);
+              }}
+            >
+              <option value="">Seleccione</option>
+              {professions.length > 0 ? (
+                professions.map((profession, index) => (
+                  <option key={index} value={professions.id}>
+                    {profession.name_profession}
+                  </option>
+                ))
+              ) : (
+                <option value="">Cargando...</option>
+              )}
+            </select>
+          </div>
+          <div className="col-4 mb-3">
+            <label>Provincia</label>
+            <select
+              className="w-100 form-control"
+              name="province"
+              id="province"
+              value={selectedProvince}
+              onChange={(e) => {
+                setSelectedProvince(e.target.value);
+                setSelectedDepartment("");
+              }}
+            >
+              <option value="">Seleccione</option>
+              {provinces.length > 0 ? (
+                provinces.map((province, index) => (
+                  <option key={index} value={province.province}>
+                    {province.province}
+                  </option>
+                ))
+              ) : (
+                <option value="">Cargando...</option>
+              )}
+            </select>
+          </div>
+          <div className="col-4 mb-3">
+            <label>Departamento</label>
+            <select
+              className="w-100 form-control"
+              name="department"
+              id="department"
+              value={selectedDepartment}
+              onChange={(e) => setSelectedDepartment(e.target.value)}
+            >
+              <option value="">Seleccione</option>
+              {departments.length > 0 ? (
+                departments.map((department, index) => (
+                  <option key={index} value={department.department}>
+                    {department.department}
+                  </option>
+                ))
+              ) : (
+                <option value="">Cargando...</option>
+              )}
+            </select>
+          </div>
+          <div className="col-4 mb-3">
+            <label>Localidad</label>
+            <select
+              className="w-100 form-control"
+              name="city"
+              id="city"
+              value={id_location}
+              onChange={(e) => setSelectedCity(e.target.value)}
+            >
+              <option value="">Seleccione</option>
+              {cities.length > 0 ? (
+                cities.map((city, index) => (
+                  <option key={index} value={city.id_location}>
+                    {city.city}
+                  </option>
+                ))
+              ) : (
+                <option value="">Cargando...</option>
+              )}
+            </select>
+          </div>
+          <div className="col-6 mb-3">
             <label>Imagen de Perfil</label>
             <input
               className="w-100 form-control form-control"
@@ -128,39 +278,16 @@ const RegisterForm = () => {
               onChange={(e) => setimage(e.target.value)}
             />
           </div>
-          <div className="col-4 mb-3">
-            <label>Profesiones</label>
-            <select className="w-100 form-control" name="profesion" id="image" value={id_profession}>
-              <option value="Profesor">Profesor</option>
-              <option value="Abogado">Abogado</option>
-              <option value="Arquitecto">Arquitecto</option>
-              <option value="Botanico">Botánico</option>
-              <option value="Computista">Computista</option>
-              <option value="Economista">Economista</option>
-              <option value="Administrador">Administrador</option>
-              <option value="Linguista">Linguista</option>
-              <option value="Técnico de sonido">Técnico de sonido</option>
-            </select>
+          <div className="col-6 mb-3">
+            <label>URL de LinkedIn</label>
+            <input
+              className="w-100 form-control"
+              type="url"
+              value={url_linkedin}
+              onChange={(e) => seturl_linkedin(e.target.value)}
+              placeholder="https://www.linkedin.com/"
+            />
           </div>
-          <div className="col-4 mb-3">
-            <label>Provincia</label>
-            <select className="w-100 form-control" name="province" id="province">
-              <option value="Seleccione">Seleccione</option>
-            </select>
-          </div>
-          <div className="col-4 mb-3">
-            <label>Departamento</label>
-            <select className="w-100 form-control"name="department" id="department">
-              <option value="Seleccione">Seleccione</option>
-            </select>
-          </div>
-          <div className="col-4 mb-3">
-            <label>Localidad</label>
-            <select className="w-100 form-control" name="city" id="city">
-              <option  value={id_location}>Seleccione</option>
-            </select>
-          </div>
-          <p/>
           <div className="col-5 mb-3">
             <button className="btn btn-outline-primary w-100 form-control" type="submit">Registrar</button>
           </div>
