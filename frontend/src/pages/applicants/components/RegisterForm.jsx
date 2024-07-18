@@ -14,7 +14,7 @@ const RegisterForm = () => {
   const [phone_number, setphone_number] = useState('');
   const [url_linkedin, seturl_linkedin] = useState('');
   const [birthdate, setbirthdate] = useState('');
-  const [image, setimage] = useState('');
+  const [image, setimage] = useState(null);
   const [sex, setsex] = useState('');
   const [professions, setprofessions] = useState('');
   const [id_profession, setidprofession] = useState('');
@@ -37,7 +37,7 @@ const RegisterForm = () => {
 
         const datap = await professionsFetching.getAllProfessions();
         setprofessions(datap)
-        console.log(datap)
+        console.log(professions)
       }
       catch {
 
@@ -82,29 +82,26 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:3000/api/aspirantes", { //esta parte es la que envia esctrictamente la información al servidor
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        dni,
-        first_name,
-        last_name,
-        email,
-        phone_number,
-        url_linkedin,
-        birthdate,
-        sex,
-        image,
-        id_location,
-        id_profession
-      })
+    const formData = new FormData();
+    formData.append('dni', dni);
+    formData.append('first_name', first_name);
+    formData.append('last_name', last_name);
+    formData.append('email', email);
+    formData.append('phone_number', phone_number);
+    formData.append('url_linkedin', url_linkedin);
+    formData.append('birthdate', birthdate);
+    formData.append('sex', sex);
+    formData.append('image', image); // Adjuntar el archivo de la imagen
+    formData.append('id_location', id_location);
+    formData.append('id_profession', id_profession);
 
-    })
+    const res = await fetch("http://localhost:3000/api/aspirantes", {
+      method: 'POST',
+      body: formData
+    });
 
     const data = await res.json(); // Esto sirve para que el servidor me devuelva una respuesta respecto al post que mande
-    console.log(data);
+    // console.log(data);
   }
 
   return (
@@ -194,7 +191,7 @@ const RegisterForm = () => {
               <option value="">Seleccione</option>
               {professions.length > 0 ? (
                 professions.map((profession, index) => (
-                  <option key={index} value={professions.id}>
+                  <option key={index} value={profession.id_profession}>
                     {profession.name_profession}
                   </option>
                 ))
@@ -274,8 +271,7 @@ const RegisterForm = () => {
             <input
               className="w-100 form-control form-control"
               type="file"
-              value={image}
-              onChange={(e) => setimage(e.target.value)}
+              onChange={(e) => setimage(e.target.files[0])}
             />
           </div>
           <div className="col-6 mb-3">

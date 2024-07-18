@@ -17,7 +17,8 @@ exports.getAspirantes = async (req, res) => {
 
 exports.addAspirante = async (req, res) => {
 
-  const { dni,
+  const {
+    dni,
     first_name,
     last_name,
     email,
@@ -25,10 +26,13 @@ exports.addAspirante = async (req, res) => {
     url_linkedin,
     birthdate,
     image,
-    id_location } = req.body
+    sex,
+    id_location,
+    id_profession } = req.body
 
   try {
     console.log(req.body)
+    let imageName = req.file ? req.file.filename : "default-image.png";
     const newApplicant = await db.Applicants.create({
       dni:dni,
       first_name:first_name,
@@ -37,27 +41,17 @@ exports.addAspirante = async (req, res) => {
       phone_number:phone_number,
       url_linkedin:url_linkedin,
       birthdate:birthdate,
-      image:'asd',
-      id_location:id_location,
+      image: imageName,
+      sex:sex,
+      id_location: parseInt(id_location,10),
+      id_profession: parseInt(id_profession,10)
     })
-    console.log(newApplicant)
+    
   }
 
   catch {
 
   }
-  
-//   try {
-//   const aspirante = await Aspirante.create(req.body);
-//   res.status(201).json({
-//     meta: {
-//       status: 201,
-//     },
-//     data: aspirante
-//   });
-// } catch (error) {
-//   res.status(500).json({ error: error.message });
-// }
 };
 
 // exports.updateAspirante = async (req, res) => {

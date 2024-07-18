@@ -61,6 +61,10 @@ module.exports = (sequelize, dataTypes) => {
     id_location: {
       type: dataTypes.INTEGER,
       allowNull: true
+    },
+    id_profession: {
+      type: dataTypes.INTEGER,
+      allowNull: true
     }
   };
   let config = {
@@ -75,17 +79,15 @@ module.exports = (sequelize, dataTypes) => {
   const Applicant = sequelize.define(alias, cols, config);
 
   Applicant.associate = function (models) {
-    Applicant.belongsToMany(models.Professions, {
-      as: "professions",
-      through: "applicants_professions",
-      foreignKey: "id_applicants",
-      otherKey: "id_professions",
-      timestamps: false
-    })
 
     Applicant.belongsTo(models.Locations, {
       as: "locations",
       foreignKey: "id_location",
+    })
+
+    Applicant.belongsTo(models.Professions, {
+      as: "Professions",
+      foreignKey: "id_profession",
     })
   }
 
