@@ -1,12 +1,13 @@
-const Locations = require('../models/locations');
+const db = require('../models');
 
 exports.getProvinces = async (req, res) => {
   try {
-    const provinces = await Locations.findAll({
-      attributes: ['province'],
-      group: ['province']
+    const data = await db.Locations.findAll({
+      attributes: [
+        [db.Sequelize.fn('DISTINCT', db.Sequelize.col('province')), 'province']
+      ]
     });
-    res.json(provinces);
+    res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -14,8 +15,12 @@ exports.getProvinces = async (req, res) => {
 
 exports.getDepartments = async (req, res) => {
   try {
-    const departments = await Locations.findAll({
+    const province = req.params.province;
+    const departments = await db.Locations.findAll({
       attributes: ['department'],
+      where: {
+        province: province
+      },
       group: ['department']
     });
     res.json(departments);
@@ -26,9 +31,13 @@ exports.getDepartments = async (req, res) => {
 
 exports.getCities = async (req, res) => {
   try {
-    const cities = await Locations.findAll({
-      attributes: ['city'],
-      group: ['city']
+    const department = req.params.department;
+    const cities = await db.Locations.findAll({
+      attributes: ['id_location', 'city'], // Incluye 'id_location' además de 'city'
+      where: {
+        department: department
+      },
+      group: ['id_location', 'city'] // Agrupa por 'id_location' y 'city' para evitar duplicados
     });
     res.json(cities);
   } catch (error) {
