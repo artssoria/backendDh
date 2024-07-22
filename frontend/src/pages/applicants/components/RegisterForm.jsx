@@ -95,7 +95,7 @@ const RegisterForm = () => {
     formData.append('id_location', id_location);
     formData.append('id_profession', id_profession);
 
-    const res = await fetch("http://localhost:3000/api/aspirantes", {
+    const res = await fetch("http://localhost:3000/api/register", { // remplazar URL
       method: 'POST',
       body: formData
     });

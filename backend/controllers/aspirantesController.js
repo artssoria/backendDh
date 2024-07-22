@@ -1,4 +1,6 @@
 const db = require('../models');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 exports.getAspirantes = async (req, res) => {
   try {
@@ -32,7 +34,7 @@ exports.addAspirante = async (req, res) => {
 
   try {
     console.log(req.body)
-    let imageName = req.file ? req.file.filename : "default-image.png";
+    let imageName = req.file ? upload.single('image') : "default-image.png"; //req.file.filename
     const newApplicant = await db.Applicants.create({
       dni:dni,
       first_name:first_name,
@@ -46,11 +48,17 @@ exports.addAspirante = async (req, res) => {
       id_location: parseInt(id_location,10),
       id_profession: parseInt(id_profession,10)
     })
-    
+    // Add a response to the client
+    res.status(201).json({
+      meta: {
+        status: 201,
+      },
+      data: newApplicant
+    });
   }
 
-  catch {
-
+  catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
