@@ -7,20 +7,20 @@ module.exports = (sequelize, dataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    created_at: {
-      type: dataTypes.DATE,
-      allowNull: false,
-      defaultValue: dataTypes.NOW
-    },
-    updated_at: {
-      type: dataTypes.DATE,
-      allowNull: false,
-      defaultValue: dataTypes.NOW
-    },
-    deleted_at: {
-      type: dataTypes.DATE,
-      allowNull: true
-    },
+    // created_at: {
+    //   type: dataTypes.DATE,
+    //   allowNull: false,
+    //   defaultValue: dataTypes.NOW
+    // },
+    // updated_at: {
+    //   type: dataTypes.DATE,
+    //   allowNull: false,
+    //   defaultValue: dataTypes.NOW
+    // },
+    // deleted_at: {
+    //   type: dataTypes.DATE,
+    //   allowNull: true
+    // },
     dni: {
       type: dataTypes.STRING,
       allowNull: false,
@@ -72,7 +72,7 @@ module.exports = (sequelize, dataTypes) => {
     timestamps: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
-    paranoid: true,
+    // paranoid: true,
     deletedAt: 'deleted_at'
   }
 
@@ -86,7 +86,7 @@ module.exports = (sequelize, dataTypes) => {
     })
 
     Applicant.belongsTo(models.Professions, {
-      as: "Professions",
+      as: "professions",
       foreignKey: "id_profession",
     })
   }

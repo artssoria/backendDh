@@ -1,8 +1,24 @@
+const { where } = require('sequelize');
 const db = require('../models');
 
 exports.getAspirantes = async (req, res) => {
   try {
-    const aspirantes = await db.Applicants.findAll();
+    const data = await db.Applicants.findAll({
+      include:[
+        {model: db.Professions,
+          as: 'professions'
+        }
+      ]
+    });
+    
+    aspirantes = data.map(aspirante =>{
+      return {
+        ...aspirante.dataValues,
+      image : 'http://localhost:3000/img/' + aspirante.image,
+      professions : aspirante.professions.name_profession
+    }
+    })
+
     res.status(200).json({
       meta: {
         status: 200,
@@ -32,7 +48,7 @@ exports.addAspirante = async (req, res) => {
 
   try {
     console.log(req.body)
-    let imageName = req.file ? req.file.filename : "default-image.png";
+    let imageName = req.file ? req.file.filename : "default-image.jpg";
     const newApplicant = await db.Applicants.create({
       dni:dni,
       first_name:first_name,
