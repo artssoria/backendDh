@@ -34,8 +34,8 @@ exports.addAspirante = async (req, res) => {
 
   try {
     console.log(req.body);
-    let imageName = req.file ? req.file.filename : 'default-image.png';
-    const newApplicant = await db.Applicants.create({
+      let imageName = req.file ? req.file.filename : 'default-image.jpg';
+      const newApplicant = await db.Applicants.create({
       dni: dni,
       first_name: first_name,
       last_name: last_name,

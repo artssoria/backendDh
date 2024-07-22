@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 module.exports = {
   development: {
     username: 'root',
-    password: 'root',
+    password: null,
     database: 'pp_grupo3',
     host: '127.0.0.1',
     dialect: 'mysql',

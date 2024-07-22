@@ -27,7 +27,7 @@ const Applicants = () => {
             className="person-box shadow p-3 mb-5 bg-body-tertiary rounded">
             <div className="box-avatar">
               <img
-                src={`http://localhost:3000/img/${person.image}`}
+                src={`/src/assets/img/${person.image}`}
                 alt={person.first_name}
               />
             </div>
