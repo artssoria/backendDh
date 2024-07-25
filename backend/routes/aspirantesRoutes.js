@@ -19,6 +19,7 @@ let storage = multer.diskStorage({
 let upload = multer({storage})
 
 router.get('/', aspirantesController.getAspirantes);
+router.get('/:id', aspirantesController.getAspirantesById);
 router.post('/', upload.single('image'), aspirantesValidations, aspirantesController.addAspirante);
 // router.put('/:id', aspirantesController.updateAspirante);
 // router.delete('/:id', aspirantesController.deleteAspirante);

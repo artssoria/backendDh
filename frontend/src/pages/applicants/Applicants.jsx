@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import applicantsFetching from "../../datafetch/applicantsFetch";
 import professionsFetching from "../../datafetch/professionsFetch";
 import ApplicantCard from "./components/ApplicantCard";
+import { Link } from "react-router-dom";
 
 const Applicants = () => {
 
@@ -17,8 +18,7 @@ const Applicants = () => {
                 const professionsData = await professionsFetching.getAllProfessions();
                 setProfessions(professionsData)
                 setApplicants(data.data)
-                console.log(applicants)
-                console.log(professions)
+                setFilteredApplicants(data.data)
             }
             catch {
                 console.log('se rompio')
@@ -26,6 +26,7 @@ const Applicants = () => {
 
         };
         fetchData()
+
     }, []);
 
     useEffect(() => {
@@ -40,7 +41,6 @@ const Applicants = () => {
             }
         })
         setFilteredApplicants(filter)
-        console.log(filteredApplicants)
     }, [selectedProfession]);
 
 
@@ -58,7 +58,7 @@ const Applicants = () => {
                         onChange={(e) => {
                             setSelectedProfession(e.target.value);
                         }}
-                    >
+                    >  
                         <option value="">Todas las profesiones</option>
                         {professions?.length > 0 ? (
                             professions?.map((profession, index) => (
@@ -77,7 +77,10 @@ const Applicants = () => {
 
 
                 {filteredApplicants?.map((applicant, index) => (
-                    <ApplicantCard key={index} name={applicant.first_name} image={applicant.image} professions={applicant.professions} last_name={applicant.last_name} />
+                    <Link to={`/applicants/${applicant.id_applicants}`} key={index}>
+                    
+                        <ApplicantCard  name={applicant.first_name} image={applicant.image} professions={applicant.professions} last_name={applicant.last_name} />
+                    </Link>
                 ))}
 
             </article>

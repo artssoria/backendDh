@@ -109,6 +109,7 @@ const RegisterForm = () => {
     const data = await res.json(); // Esto sirve para que el servidor me devuelva una respuesta respecto al post que mande
      console.log(data);
      if (data.status == 200){
+      console.log(data)
       setregistroexitoso(data.success)
      }
      else if (data.status == 400){
@@ -303,8 +304,7 @@ const RegisterForm = () => {
           </div>
           {errormessage?.length > 0 &&
               errormessage.map((error, index) => <p key={index}>{error.msg}</p>)}
-           {registroexitoso.length > 0 &&
-              registroexitoso.map((success, index) => <p key={index}>{success.msg}</p>)}
+           {registroexitoso?.length > 0 && <p>{registroexitoso}</p>}
         </div>
       </div>
     </form>

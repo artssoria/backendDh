@@ -33,6 +33,35 @@ exports.getAspirantes = async (req, res) => {
   }
 };
 
+exports.getAspirantesById = async (req, res) => {
+  const applicantId = req.params.id
+  try {
+    const data = await db.Applicants.findByPk( applicantId, {
+      include:[
+        {model: db.Professions,
+          as: 'professions'
+        }
+      ]
+    });
+
+    const aspirantes = {...data.dataValues,
+                  image : 'http://localhost:3000/img/' + data.image,
+                  professions : data.professions.name_profession
+                }
+
+    res.status(200).json({
+      meta: {
+        status: 200,
+        total: aspirantes.length
+      },
+      data: aspirantes
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 exports.addAspirante = async (req, res) => {
 
   let erros = validationResult(req);
