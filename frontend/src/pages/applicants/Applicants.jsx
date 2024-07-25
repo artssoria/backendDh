@@ -1,88 +1,71 @@
 import { useState, useEffect } from "react";
 import applicantsFetching from "../../datafetch/applicantsFetch";
-import professionsFetching from "../../datafetch/professionsFetch";
-import ApplicantCard from "./components/ApplicantCard";
 
 const Applicants = () => {
-
+    
     const [applicants, setApplicants] = useState([]);
-    const [professions, setProfessions] = useState(null);
-    const [selectedProfession, setSelectedProfession] = useState(null);
-    const [filteredApplicants, setFilteredApplicants] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await applicantsFetching.getAllApplicants();
-                const professionsData = await professionsFetching.getAllProfessions();
-                setProfessions(professionsData)
                 setApplicants(data.data)
-                console.log(applicants)
-                console.log(professions)
+                console.log(data)
             }
             catch {
-                console.log('se rompio')
+
             }
 
         };
         fetchData()
     }, []);
 
-    useEffect(() => {
-        let filter = applicants.filter((applicant) => {
-            if (applicant.professions == selectedProfession) {
-                return applicant
-            }
-            else {
-                if (selectedProfession == '') {
-                    return applicant
-                }
-            }
-        })
-        setFilteredApplicants(filter)
-        console.log(filteredApplicants)
-    }, [selectedProfession]);
-
-
     return (
-        <section className="content aspirantes">
-            <h2>Aspirantes</h2>
-            <div className="row">
-                <div className="col-3 mb-3">
-                    <label>Seleccione una profesión</label>
-                    <select
-                        className="w-100 form-control"
-                        name="professions"
-                        id="professions"
-                        value={selectedProfession}
-                        onChange={(e) => {
-                            setSelectedProfession(e.target.value);
-                        }}
-                    >
-                        <option value="">Todas las profesiones</option>
-                        {professions?.length > 0 ? (
-                            professions?.map((profession, index) => (
-                                <option key={index} value={profession.name_profession}>
-                                    {profession.name_profession}
-                                </option>
-                            ))
-                        ) : (
-                            <option value="">Cargando...</option>
-                        )}
-                    </select>
-                </div>
+      <section className="content aspirantes">
+        <h2>Aspirantes</h2>
+        <article className="person-boxes">
+          {[
+            {
+              name: "Gloria Medina",
+              position: "Administrador",
+              img: "foto1.jpg",
+            },
+            {
+              name: "Daniel Fuentes",
+              position: "Técnico de sonido",
+              img: "foto2.jpg",
+            },
+            { name: "Tim Tim", position: "Linguista", img: "foto3.jpg" },
+            { name: "Rocio Carle", position: "Profesor", img: "foto4.jpg" },
+            { name: "Victor Fuentes", position: "Computista", img: "foto5.jpg" },
+            { name: "Luis Fuentes", position: "Economista", img: "foto6.jpg" },
+          ].map((person, index) => (
+            <div
+              key={index}
+              className="person-box shadow p-3 mb-5 bg-body-tertiary rounded">
+              <div className="box-avatar">
+                <img src={`src/assets/img/${person.img}`} alt={person.name} />
+              </div>
+              <div className="box-bio">
+                <h2 className="bio-name">{person.name}</h2>
+                <p className="bio-position">{person.position}</p>
+              </div>
+              <div className="box-actions">
+                <button>
+                  <i className="bi bi-star"></i>
+                </button>
+                <button>
+                  <i className="bi bi-chat"></i>
+                </button>
+                <button>
+                  <i className="bi bi-envelope"></i>
+                </button>
+              </div>
             </div>
-            <article className="person-boxes">
-
-
-
-                {filteredApplicants?.map((applicant, index) => (
-                    <ApplicantCard key={index} name={applicant.first_name} image={applicant.image} professions={applicant.professions} last_name={applicant.last_name} />
-                ))}
-
-            </article>
-        </section>
+          ))}
+        </article>
+      </section>
     );
-};
-
-export default Applicants;
+  };
+  
+  export default Applicants;

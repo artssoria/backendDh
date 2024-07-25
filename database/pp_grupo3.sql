@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-07-2024 a las 18:36:56
+-- Tiempo de generación: 09-07-2024 a las 18:45:13
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Versión de PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -50,11 +50,10 @@ CREATE TABLE `applicants` (
 --
 
 INSERT INTO `applicants` (`id_applicants`, `created_at`, `updated_at`, `deleted_at`, `dni`, `first_name`, `last_name`, `email`, `phone_number`, `url_linkedin`, `birthdate`, `sex`, `image`, `id_location`, `id_profession`) VALUES
-(4, '2024-07-09 14:25:51', '2024-07-09 16:28:04', NULL, '12343678', 'Ruben', 'Carlos', 'juan.perez@example.com', '1234567890', 'https://linkedin.com/in/juanperez', '1990-01-01 00:00:00', 'M', 'foto2.jpg', 1, 1),
-(5, '2024-07-09 16:28:42', '2024-07-09 16:28:42', NULL, '12345678', 'Marina', 'Rosauro', 'mariono.rosauro@example.com', '1234567890', 'https://linkedin.com/in/juanperez', '1990-01-01 00:00:00', 'F', 'foto1.jpg', 4, 2),
-(6, '2024-07-09 16:31:52', '2024-07-09 16:31:52', '2024-07-09 16:32:16', '19827364', 'Santos', 'Polem', 'santos.polem@example.com', '1234567890', 'https://linkedin.com/in/santospolem', '1990-01-01 00:00:00', 'F', 'foto3.jpg', 4, 1),
-(10, '2024-07-09 16:33:56', '2024-07-09 16:40:21', NULL, '19283942', 'nestor', 'bloque', 'nestor.enbloque@example.com', '1234567890', 'https://linkedin.com/in/nestorenbloque', '1990-01-01 00:00:00', 'M', 'foto5.jpg', 3, 1),
-(13, '2024-07-22 16:30:01', '2024-07-22 16:30:01', NULL, '35538490', 'Micaela aylen', 'Reynoso', 'reynosomicaela94@gmail.com', '3884725796', 'https://www.linkedin.com/in/micaela-reynoso-a4b9262a1', '1994-05-02 00:00:00', 'F', 'default-image.jpg', 7101, 2);
+(4, '2024-07-09 14:25:51', '2024-07-09 16:28:04', NULL, '12343678', 'Ruben', 'Carlos', 'juan.perez@example.com', '1234567890', 'https://linkedin.com/in/juanperez', '1990-01-01 00:00:00', 'M', 'url_de_imagen', 1, 1),
+(5, '2024-07-09 16:28:42', '2024-07-09 16:28:42', NULL, '12345678', 'Marino', 'Rosauro', 'mariono.rosauro@example.com', '1234567890', 'https://linkedin.com/in/juanperez', '1990-01-01 00:00:00', 'F', 'url_de_imagen', 4, 2),
+(6, '2024-07-09 16:31:52', '2024-07-09 16:31:52', '2024-07-09 16:32:16', '19827364', 'Santos', 'Polem', 'santos.polem@example.com', '1234567890', 'https://linkedin.com/in/santospolem', '1990-01-01 00:00:00', 'F', 'url_de_imagen', 4, 1),
+(10, '2024-07-09 16:33:56', '2024-07-09 16:40:21', NULL, '19283942', 'nestor', 'bloque', 'nestor.enbloque@example.com', '1234567890', 'https://linkedin.com/in/nestorenbloque', '1990-01-01 00:00:00', 'M', 'url_de_imagen', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -13667,7 +13666,7 @@ ALTER TABLE `professions`
 -- AUTO_INCREMENT de la tabla `applicants`
 --
 ALTER TABLE `applicants`
-  MODIFY `id_applicants` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_applicants` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `locations`

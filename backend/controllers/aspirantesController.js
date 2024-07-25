@@ -2,15 +2,13 @@ const db = require('../models');
 
 exports.getAspirantes = async (req, res) => {
   try {
-    const aspirantes = await db.Applicants.findAll({
-      include: ['Professions'],
-    });
+    const aspirantes = await db.Applicants.findAll();
     res.status(200).json({
       meta: {
         status: 200,
-        total: aspirantes.length,
+        total: aspirantes.length
       },
-      data: aspirantes,
+      data: aspirantes
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -18,6 +16,7 @@ exports.getAspirantes = async (req, res) => {
 };
 
 exports.addAspirante = async (req, res) => {
+
   const {
     dni,
     first_name,
@@ -29,26 +28,30 @@ exports.addAspirante = async (req, res) => {
     image,
     sex,
     id_location,
-    id_profession,
-  } = req.body;
+    id_profession } = req.body
 
   try {
-    console.log(req.body);
-      let imageName = req.file ? req.file.filename : 'default-image.jpg';
-      const newApplicant = await db.Applicants.create({
-      dni: dni,
-      first_name: first_name,
-      last_name: last_name,
-      email: email,
-      phone_number: phone_number,
-      url_linkedin: url_linkedin,
-      birthdate: birthdate,
+    console.log(req.body)
+    let imageName = req.file ? req.file.filename : "default-image.png";
+    const newApplicant = await db.Applicants.create({
+      dni:dni,
+      first_name:first_name,
+      last_name:last_name,
+      email:email,
+      phone_number:phone_number,
+      url_linkedin:url_linkedin,
+      birthdate:birthdate,
       image: imageName,
-      sex: sex,
-      id_location: parseInt(id_location, 10),
-      id_profession: parseInt(id_profession, 10),
-    });
-  } catch {}
+      sex:sex,
+      id_location: parseInt(id_location,10),
+      id_profession: parseInt(id_profession,10)
+    })
+    
+  }
+
+  catch {
+
+  }
 };
 
 // exports.updateAspirante = async (req, res) => {
