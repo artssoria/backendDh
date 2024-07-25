@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1:3307
--- Tiempo de generación: 14-07-2024 a las 23:42:26
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 26-07-2024 a las 01:39:16
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Versión de PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -41,8 +41,24 @@ CREATE TABLE `applicants` (
   `birthdate` date NOT NULL,
   `sex` varchar(1) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `id_location` int(11) DEFAULT NULL
+  `id_location` int(11) DEFAULT NULL,
+  `id_profession` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `applicants`
+--
+
+INSERT INTO `applicants` (`id_applicants`, `created_at`, `updated_at`, `deleted_at`, `dni`, `first_name`, `last_name`, `email`, `phone_number`, `url_linkedin`, `birthdate`, `sex`, `image`, `id_location`, `id_profession`) VALUES
+(5, '2024-07-25', '2024-07-25', NULL, '30123456', 'Lucas', 'Fernandez', 'lucas.fernandez@example.com', '3801234567', 'https://linkedin.com/in/lucas-fernandez', '1990-05-12', 'M', '', 10321, 1),
+(6, '2024-07-25', '2024-07-25', NULL, '28123457', 'Ana', 'Martinez', 'ana.martinez@example.com', '3707654321', 'https://linkedin.com/in/ana-martinez', '1988-07-23', 'F', '', 10465, 2),
+(7, '2024-07-25', '2024-07-25', NULL, '27123458', 'Jorge', 'Perez', 'jorge.perez@example.com', '3609876543', 'https://linkedin.com/in/jorge-perez', '1985-08-15', 'M', '', 2662, 3),
+(8, '2024-07-25', '2024-07-25', NULL, '39123459', 'Maria', 'Lopez', 'maria.lopez@example.com', '3506543210', 'https://linkedin.com/in/maria-lopez', '1992-03-10', 'F', '', 8757, 4),
+(9, '2024-07-25', '2024-07-25', NULL, '40123460', 'Carlos', 'Gomez', 'carlos.gomez@example.com', '3808765432', 'https://linkedin.com/in/carlos-gomez', '1987-06-18', 'M', '', 10321, 5),
+(10, '2024-07-25', '2024-07-25', NULL, '41123461', 'Lucia', 'Ramirez', 'lucia.ramirez@example.com', '3701239876', 'https://linkedin.com/in/lucia-ramirez', '1993-09-25', 'F', '', 10465, 6),
+(11, '2024-07-25', '2024-07-25', NULL, '42123462', 'Miguel', 'Sanchez', 'miguel.sanchez@example.com', '3605432109', 'https://linkedin.com/in/miguel-sanchez', '1989-04-11', 'M', '', 2662, 7),
+(12, '2024-07-25', '2024-07-25', NULL, '43123463', 'Laura', 'Diaz', 'laura.diaz@example.com', '3509871234', 'https://linkedin.com/in/laura-diaz', '1991-12-03', 'F', '', 8757, 8),
+(13, '2024-07-25', '2024-07-25', '2024-07-25', '38782666', 'ruben', 'carlos', 'arts@jsjsh.com', '377788266', 'https://linkedin.com/ruben-computo', '1997-02-18', 'M', 'img-1721950718134.jpg', 8750, 4);
 
 -- --------------------------------------------------------
 
@@ -13625,8 +13641,14 @@ CREATE TABLE `professions` (
 --
 
 INSERT INTO `professions` (`id_profession`, `name_profession`) VALUES
-(1, 'Profesor'),
-(2, '');
+(1, 'Abogado'),
+(2, 'Arquitecto'),
+(3, 'Botánico'),
+(4, 'Computista'),
+(5, 'Economista'),
+(6, 'Ténico de sonido'),
+(7, 'Profesor'),
+(8, 'Linguista');
 
 --
 -- Índices para tablas volcadas
@@ -13637,7 +13659,8 @@ INSERT INTO `professions` (`id_profession`, `name_profession`) VALUES
 --
 ALTER TABLE `applicants`
   ADD PRIMARY KEY (`id_applicants`),
-  ADD KEY `location_id_location_applicants` (`id_location`);
+  ADD KEY `location_id_location_applicants` (`id_location`),
+  ADD KEY `profession_id_profession_applicants` (`id_profession`);
 
 --
 -- Indices de la tabla `applicants_professions`
@@ -13667,7 +13690,7 @@ ALTER TABLE `professions`
 -- AUTO_INCREMENT de la tabla `applicants`
 --
 ALTER TABLE `applicants`
-  MODIFY `id_applicants` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_applicants` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `applicants_professions`
@@ -13685,7 +13708,7 @@ ALTER TABLE `locations`
 -- AUTO_INCREMENT de la tabla `professions`
 --
 ALTER TABLE `professions`
-  MODIFY `id_profession` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_profession` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Restricciones para tablas volcadas
@@ -13695,7 +13718,8 @@ ALTER TABLE `professions`
 -- Filtros para la tabla `applicants`
 --
 ALTER TABLE `applicants`
-  ADD CONSTRAINT `location_id_location_applicants` FOREIGN KEY (`id_location`) REFERENCES `locations` (`id_location`);
+  ADD CONSTRAINT `location_id_location_applicants` FOREIGN KEY (`id_location`) REFERENCES `locations` (`id_location`),
+  ADD CONSTRAINT `profession_id_profession_applicants` FOREIGN KEY (`id_profession`) REFERENCES `professions` (`id_profession`);
 
 --
 -- Filtros para la tabla `applicants_professions`

@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const aspirantesController = require('../controllers/aspirantesController');
+const aspirantesValidations = require('../middleware/applicantsValidations')
 
 let storage = multer.diskStorage({
     destination: function (req, file,cb){
@@ -18,7 +19,7 @@ let storage = multer.diskStorage({
 let upload = multer({storage})
 
 router.get('/', aspirantesController.getAspirantes);
-router.post('/', upload.single('image'), aspirantesController.addAspirante);
+router.post('/', upload.single('image'), aspirantesValidations, aspirantesController.addAspirante);
 // router.put('/:id', aspirantesController.updateAspirante);
 // router.delete('/:id', aspirantesController.deleteAspirante);
 

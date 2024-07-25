@@ -1,23 +1,26 @@
 const { where } = require('sequelize');
 const db = require('../models');
+const { body, check, validationResult } = require('express-validator');
+const { stack } = require('sequelize/lib/utils');
 
 exports.getAspirantes = async (req, res) => {
   try {
     const data = await db.Applicants.findAll({
-      include:[
-        {model: db.Professions,
+      include: [
+        {
+          model: db.Professions,
           as: 'professions'
         }
       ]
     });
-    
-    aspirantes = data.map(aspirante =>{
+
+    const aspirantes = data.map(aspirante => {
       return {
         ...aspirante.dataValues,
-      image : 'http://localhost:3000/img/' + aspirante.image,
-      professions : aspirante.professions.name_profession
-    }
-    })
+        image: 'http://localhost:3000/img/' + aspirante.image,
+        professions: aspirante.professions.name_profession
+      };
+    });
 
     res.status(200).json({
       meta: {
@@ -33,6 +36,14 @@ exports.getAspirantes = async (req, res) => {
 
 exports.addAspirante = async (req, res) => {
 
+  let erros = validationResult(req);
+
+  if (erros.errors.length > 0) {
+    console.log("Entre aqui")
+    return res.json({erros:erros, status:400})
+  }
+
+  console.log(erros);
   const {
     dni,
     first_name,
@@ -62,7 +73,7 @@ exports.addAspirante = async (req, res) => {
       id_location: parseInt(id_location,10),
       id_profession: parseInt(id_profession,10)
     })
-    
+    return res.json({success: 'Registro exitoso!', status: 200})
   }
 
   catch {

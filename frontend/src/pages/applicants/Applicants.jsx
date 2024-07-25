@@ -2,47 +2,50 @@ import { useState, useEffect } from "react";
 import applicantsFetching from "../../datafetch/applicantsFetch";
 import professionsFetching from "../../datafetch/professionsFetch";
 import ApplicantCard from "./components/ApplicantCard";
+import ApplicantModal from "./components/ApplicantModal";
+
 
 const Applicants = () => {
-
     const [applicants, setApplicants] = useState([]);
-    const [professions, setProfessions] = useState(null);
-    const [selectedProfession, setSelectedProfession] = useState(null);
-    const [filteredApplicants, setFilteredApplicants] = useState(null);
+    const [professions, setProfessions] = useState([]);
+    const [selectedProfession, setSelectedProfession] = useState('');
+    const [filteredApplicants, setFilteredApplicants] = useState([]);
+    const [selectedApplicant, setSelectedApplicant] = useState(null);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await applicantsFetching.getAllApplicants();
                 const professionsData = await professionsFetching.getAllProfessions();
-                setProfessions(professionsData)
-                setApplicants(data.data)
-                console.log(applicants)
-                console.log(professions)
+                setProfessions(professionsData);
+                setApplicants(data.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
             }
-            catch {
-                console.log('se rompio')
-            }
-
         };
-        fetchData()
+        fetchData();
     }, []);
 
     useEffect(() => {
         let filter = applicants.filter((applicant) => {
-            if (applicant.professions == selectedProfession) {
-                return applicant
+            if (selectedProfession === '') {
+                return true;
             }
-            else {
-                if (selectedProfession == '') {
-                    return applicant
-                }
-            }
-        })
-        setFilteredApplicants(filter)
-        console.log(filteredApplicants)
-    }, [selectedProfession]);
+            return applicant.professions === selectedProfession;
+        });
+        setFilteredApplicants(filter);
+    }, [selectedProfession, applicants]);
 
+    const openModal = (applicant) => {
+        setSelectedApplicant(applicant);
+        setModalIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setSelectedApplicant(null);
+        setModalIsOpen(false);
+    };
 
     return (
         <section className="content aspirantes">
@@ -55,14 +58,12 @@ const Applicants = () => {
                         name="professions"
                         id="professions"
                         value={selectedProfession}
-                        onChange={(e) => {
-                            setSelectedProfession(e.target.value);
-                        }}
+                        onChange={(e) => setSelectedProfession(e.target.value)}
                     >
                         <option value="">Todas las profesiones</option>
-                        {professions?.length > 0 ? (
-                            professions?.map((profession, index) => (
-                                <option key={index} value={profession.name_profession}>
+                        {professions.length > 0 ? (
+                            professions.map((profession) => (
+                                <option key={profession.id_profession} value={profession.name_profession}>
                                     {profession.name_profession}
                                 </option>
                             ))
@@ -73,14 +74,24 @@ const Applicants = () => {
                 </div>
             </div>
             <article className="person-boxes">
-
-
-
-                {filteredApplicants?.map((applicant, index) => (
-                    <ApplicantCard key={index} name={applicant.first_name} image={applicant.image} professions={applicant.professions} last_name={applicant.last_name} />
+                {filteredApplicants.map((applicant) => (
+                    <div key={applicant.id_applicants} onClick={() => openModal(applicant)}>
+                        <ApplicantCard
+                            name={applicant.first_name}
+                            image={applicant.image}
+                            professions={applicant.professions}
+                            last_name={applicant.last_name}
+                        />
+                    </div>
                 ))}
-
             </article>
+            {selectedApplicant && (
+                <ApplicantModal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    applicant={selectedApplicant}
+                />
+            )}
         </section>
     );
 };
