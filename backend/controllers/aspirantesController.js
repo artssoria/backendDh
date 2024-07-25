@@ -1,5 +1,7 @@
 const { where } = require('sequelize');
 const db = require('../models');
+const { body, check, validationResult } = require('express-validator');
+const { stack } = require('sequelize/lib/utils');
 
 exports.getAspirantes = async (req, res) => {
   try {
@@ -33,6 +35,14 @@ exports.getAspirantes = async (req, res) => {
 
 exports.addAspirante = async (req, res) => {
 
+  let erros = validationResult(req);
+
+  if (erros.errors.length > 0) {
+    console.log("Entre aqui")
+    return res.json({erros:erros, status:400})
+  }
+
+  console.log(erros);
   const {
     dni,
     first_name,
@@ -62,7 +72,7 @@ exports.addAspirante = async (req, res) => {
       id_location: parseInt(id_location,10),
       id_profession: parseInt(id_profession,10)
     })
-    
+    return res.json({success: 'Registro exitoso!', status: 200})
   }
 
   catch {

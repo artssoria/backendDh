@@ -26,6 +26,9 @@ const RegisterForm = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [cities, setCities] = useState([]);
   const [id_location, setSelectedCity] = useState('');
+  const [errormessage, setErrormessage] = useState('');
+  const [registroexitoso, setregistroexitoso] = useState('');
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,6 +82,9 @@ const RegisterForm = () => {
     fetchCities();
   }, [selectedDepartment]);
 
+  useEffect(() => {
+    
+  })
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -101,7 +107,15 @@ const RegisterForm = () => {
     });
 
     const data = await res.json(); // Esto sirve para que el servidor me devuelva una respuesta respecto al post que mande
-    // console.log(data);
+     console.log(data);
+     if (data.status == 200){
+      setregistroexitoso(data.success)
+     }
+     else if (data.status == 400){
+      console.log("Entre a 400");
+      setErrormessage(data.erros.errors);
+     }
+    
   }
 
   return (
@@ -287,6 +301,10 @@ const RegisterForm = () => {
           <div className="col-5 mb-3">
             <button className="btn btn-outline-primary w-100 form-control" type="submit">Registrar</button>
           </div>
+          {errormessage?.length > 0 &&
+              errormessage.map((error, index) => <p key={index}>{error.msg}</p>)}
+           {registroexitoso.length > 0 &&
+              registroexitoso.map((success, index) => <p key={index}>{success.msg}</p>)}
         </div>
       </div>
     </form>
