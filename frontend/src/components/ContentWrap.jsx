@@ -1,5 +1,5 @@
-import Aspirantes from "./Aspirantes";
-import Profesiones from "./Profesiones";
+import Aspirantes from './Applicants';
+import Profesiones from './Profesiones';
 
 const ContentWrap = () => {
   return (
