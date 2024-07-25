@@ -14,6 +14,7 @@ const port = 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static("public"))
 
 app.use('/api/aspirantes', aspirantesRoutes);
 app.use('/api/locations', locationsRoutes);

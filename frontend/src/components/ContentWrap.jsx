@@ -3,7 +3,7 @@ import Profesiones from "./Profesiones";
 
 const ContentWrap = () => {
   return (
-    <main className="content-wrap col-span-9 row-span-11 px-12 overflow-auto">
+    <>
       <header className="preventa">
         <h2 className="text-2xl">Búsqueda y selección</h2>
         <p className="text-center text-lg">
@@ -16,7 +16,7 @@ const ContentWrap = () => {
       </header>
       <Aspirantes />
       <Profesiones />
-    </main>
+    </>
   );
 };
 
