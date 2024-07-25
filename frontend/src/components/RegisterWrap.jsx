@@ -13,7 +13,7 @@ const RegisterWrap = ()=>{
         url_linkedin:'',
         birthdate:'',
         sex:'',
-        profession:'',
+        name_profession:'',
         city:'',
         department:'',
         province:'',
@@ -23,8 +23,13 @@ const RegisterWrap = ()=>{
     // Validar los datos del formulario
     const validateForm = () =>{
         const newErrors = {}
+        const requiredFields = [
+            'dni', 'first_name', 'last_name', 'email', 'phone_number', 
+            'url_linkedin', 'birthdate', 'sex', 'name_profession', 
+            'city', 'department', 'province', 'image'
+        ]
+        requiredFields.forEach(field => !formData[field] && (newErrors[field] = `${field.replace('_',' ')} es requerido`))
 
-        if (!formData) newErrors = 'Un campo es requerido, revise por favor'
         return newErrors
     }
     // Maneja el envío del formulario
@@ -42,8 +47,8 @@ const RegisterWrap = ()=>{
             formDataToSend.append(key, formData[key]);
         });
 
-        try {
-            const response = await axios.post('http://localhost:3001/api/register', formDataToSend, {
+        try { /*Cambiar api por la que estamos usando*/
+            const response = await axios.post('http://localhost:3000/api/register', formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -59,7 +64,7 @@ const RegisterWrap = ()=>{
                 url_linkedin:'',
                 birthdate:'',
                 sex:'',
-                profession:'',
+                name_profession:'',
                 city:'',
                 department:'',
                 province:'',
@@ -117,11 +122,11 @@ const RegisterWrap = ()=>{
 					</div>
 					<div>
 						<label htmlFor="imagen">Imagen de perfil</label>
-						<input class="imagen" type="file" name="imagen" id="image" value={formData.image}>{errors.image && <p className='text-danger'>{errors.image}</p>}</input>
+						<input class="imagen" type="file" name="imagen" id="image" value={formData.image} required>{errors.image && <p className='text-danger'>{errors.image}</p>}</input>
 					</div>
 					<div>
 						<label htmlFor="profesion">Profesión</label>
-						<select name="profesion" id="image" value={formData.profession} required>
+						<select name="profesion" id="image" value={formData.name_profession} required>
 							<option value="Profesor">Profesor</option>
 							<option value="Abogado">Abogado</option>
 							<option value="Arquitecto">Arquitecto</option>
@@ -131,12 +136,12 @@ const RegisterWrap = ()=>{
 							<option value="Administrador">Administrador</option>
 							<option value="Linguista">Linguista</option>
 							<option value="Técnico de sonido">Técnico de sonido</option>
-                            {errors.profession && <p className='text-danger'>{errors.profession}</p>}
+                            {errors.name_profession && <p className='text-danger'>{errors.name_profession}</p>}
 						</select>
 					</div>
                     <div>
 						<label htmlFor="City">City</label>
-						<select name="City" id="city" value={formData.city}>
+						<select name="City" id="city" value={formData.city} required>
                             <option value="">Seleccione</option>
                             {cities.map(locations =>(
                                 <option key={locations.cca3} value={locations.city}> 
@@ -147,24 +152,14 @@ const RegisterWrap = ()=>{
 					</div>
                     <div>
 						<label htmlFor="department">Department</label>
-                        <select name="department" id="department" value={formData.department}>
+                        <select name="department" id="department" value={formData.department} required>
                             <option value="">Seleccione</option>
-                            {departments.map(locations =>(
-                                <option key={locations.cca3} value={locations.department}> 
-                                    {locations.department}
-                                </option>
-                            ))}
                         </select>
 					</div>
                     <div>
 						<label htmlFor="province">Province</label>
-                        <select name="province" id="province" value={formData.province}>
+                        <select name="province" id="province" value={formData.province} required>
                             <option value="">Seleccione</option>
-                            {provinces.map(locations =>(
-                                <option key={locations.cca3} value={locations.province}> 
-                                    {locations.province}
-                                </option>
-                            ))}
                         </select>
 					</div>
 
