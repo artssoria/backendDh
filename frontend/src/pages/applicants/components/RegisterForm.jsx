@@ -24,6 +24,7 @@ const RegisterForm = () => {
   const [id_location, setSelectedCity] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [validationErrors, setValidationErrors] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,40 +76,56 @@ const RegisterForm = () => {
     fetchCities();
   }, [selectedDepartment]);
 
+  const validateForm = () => {
+    let errors = {};
+    if (!dni) errors.dni = "DNI es requerido";
+    if (!first_name) errors.first_name = "Nombre es requerido";
+    if (!last_name) errors.last_name = "Apellido es requerido";
+    if (!email) errors.email = "Email es requerido";
+    if (!phone_number) errors.phone_number = "Número de teléfono es requerido";
+    if (!birthdate) errors.birthdate = "Fecha de nacimiento es requerida";
+    if (!sex) errors.sex = "Sexo es requerido";
+    if (!id_profession) errors.id_profession = "Profesión es requerida";
+    if (!id_location) errors.id_location = "Localidad es requerida";
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (validateForm()) {
+      const formData = new FormData();
+      formData.append('dni', dni);
+      formData.append('first_name', first_name);
+      formData.append('last_name', last_name);
+      formData.append('email', email);
+      formData.append('phone_number', phone_number);
+      formData.append('url_linkedin', url_linkedin);
+      formData.append('birthdate', birthdate);
+      formData.append('sex', sex);
+      formData.append('image', image); // Adjuntar el archivo de la imagen
+      formData.append('id_location', id_location);
+      formData.append('id_profession', id_profession);
 
-    const formData = new FormData();
-    formData.append('dni', dni);
-    formData.append('first_name', first_name);
-    formData.append('last_name', last_name);
-    formData.append('email', email);
-    formData.append('phone_number', phone_number);
-    formData.append('url_linkedin', url_linkedin);
-    formData.append('birthdate', birthdate);
-    formData.append('sex', sex);
-    formData.append('image', image); // Adjuntar el archivo de la imagen
-    formData.append('id_location', id_location);
-    formData.append('id_profession', id_profession);
+      try {
+        const res = await fetch("http://localhost:3000/api/aspirantes", {
+          method: 'POST',
+          body: formData
+        });
 
-    try {
-      const res = await fetch("http://localhost:3000/api/aspirantes", {
-        method: 'POST',
-        body: formData
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        setSuccessMessage("Aspirante registrado con éxito");
-        setErrorMessage('');
-      } else {
-        setErrorMessage(data.error || "Error al registrar aspirante. Inténtalo de nuevo.");
+        const data = await res.json();
+        if (res.ok) {
+          setSuccessMessage("Aspirante registrado con éxito");
+          setErrorMessage('');
+        } else {
+          setErrorMessage(data.error || "Error al registrar aspirante. Inténtalo de nuevo.");
+          setSuccessMessage('');
+        }
+      } catch (error) {
+        console.error('Error al enviar el formulario:', error);
+        setErrorMessage("Error al enviar el formulario. Inténtalo de nuevo más tarde.");
         setSuccessMessage('');
       }
-    } catch (error) {
-      console.error('Error al enviar el formulario:', error);
-      setErrorMessage("Error al enviar el formulario. Inténtalo de nuevo más tarde.");
-      setSuccessMessage('');
     }
   };
 
@@ -124,6 +141,7 @@ const RegisterForm = () => {
               value={first_name}
               onChange={(e) => setFirstName(e.target.value)}
             />
+            {validationErrors.first_name && <p className="text-danger">{validationErrors.first_name}</p>}
           </div>
           <div className="col-6 mb-3">
             <label>Apellido</label>
@@ -133,6 +151,7 @@ const RegisterForm = () => {
               value={last_name}
               onChange={(e) => setLastName(e.target.value)}
             />
+            {validationErrors.last_name && <p className="text-danger">{validationErrors.last_name}</p>}
           </div>
           <div className="col-4 mb-3">
             <label>DNI</label>
@@ -142,6 +161,7 @@ const RegisterForm = () => {
               value={dni}
               onChange={(e) => setDni(e.target.value)}
             />
+            {validationErrors.dni && <p className="text-danger">{validationErrors.dni}</p>}
           </div>
           <div className="col-4 mb-3">
             <label>Email</label>
@@ -151,6 +171,7 @@ const RegisterForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            {validationErrors.email && <p className="text-danger">{validationErrors.email}</p>}
           </div>
           <div className="col-4 mb-3">
             <label>N° de telefono</label>
@@ -160,6 +181,7 @@ const RegisterForm = () => {
               value={phone_number}
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
+            {validationErrors.phone_number && <p className="text-danger">{validationErrors.phone_number}</p>}
           </div>
           <div className="col-4 mb-3">
             <label>Fecha de Nacimiento</label>
@@ -169,6 +191,7 @@ const RegisterForm = () => {
               value={birthdate}
               onChange={(e) => setBirthdate(e.target.value)}
             />
+            {validationErrors.birthdate && <p className="text-danger">{validationErrors.birthdate}</p>}
           </div>
           <div className="col-4 mb-3">
             <label>Sexo</label>
@@ -183,6 +206,7 @@ const RegisterForm = () => {
               <option value="F">Femenino</option>
               <option value="X">No Binario</option>
             </select>
+            {validationErrors.sex && <p className="text-danger">{validationErrors.sex}</p>}
           </div>
           <div className="col-4 mb-3">
             <label>Profesiones</label>
@@ -204,6 +228,7 @@ const RegisterForm = () => {
                 <option value="">Cargando...</option>
               )}
             </select>
+            {validationErrors.id_profession && <p className="text-danger">{validationErrors.id_profession}</p>}
           </div>
           <div className="col-4 mb-3">
             <label>Provincia</label>
@@ -270,6 +295,7 @@ const RegisterForm = () => {
                 <option value="">Cargando...</option>
               )}
             </select>
+            {validationErrors.id_location && <p className="text-danger">{validationErrors.id_location}</p>}
           </div>
           <div className="col-6 mb-3">
             <label>Imagen de Perfil</label>
