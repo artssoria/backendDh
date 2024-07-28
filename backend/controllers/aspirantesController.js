@@ -40,13 +40,19 @@ exports.getAspirantesById = async (req, res) => {
       include:[
         {model: db.Professions,
           as: 'professions'
+        },
+        {model: db.Locations,
+          as: 'locations'
         }
       ]
     });
 
     const aspirantes = {...data.dataValues,
                   image : 'http://localhost:3000/img/' + data.image,
-                  professions : data.professions.name_profession
+                  professions : data.professions.name_profession,
+                  city: data.locations.city,
+                  department: data.locations.department,
+                  province: data.locations.province
                 }
 
     res.status(200).json({

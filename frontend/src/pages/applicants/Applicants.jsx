@@ -77,7 +77,7 @@ const Applicants = () => {
 
 
                 {filteredApplicants?.map((applicant, index) => (
-                    <Link to={`/applicants/${applicant.id_applicants}`} key={index}>
+                    <Link style={{ textDecoration: "none", color: "inherit"}} to={`/applicants/${applicant.id_applicants}`} key={index}>
                     
                         <ApplicantCard  name={applicant.first_name} image={applicant.image} professions={applicant.professions} last_name={applicant.last_name} />
                     </Link>
