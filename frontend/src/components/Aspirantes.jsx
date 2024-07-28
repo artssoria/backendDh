@@ -1,34 +1,25 @@
+import useAspirantes from '../hooks/useAspirantes';
 
-const Applicants = () => {
+const Aspirantes = () => {
+  const { aspirantes, loading, error } = useAspirantes();
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+
   return (
     <section className="content aspirantes">
-      <h2>Aspirantes</h2>
+      <h2 className="text-center p-4">Aspirantes</h2>
       <article className="person-boxes">
-        {[
-          {
-            name: "Gloria Medina",
-            position: "Administrador",
-            img: "foto1.jpg",
-          },
-          {
-            name: "Daniel Fuentes",
-            position: "Técnico de sonido",
-            img: "foto2.jpg",
-          },
-          { name: "Tim Tim", position: "Linguista", img: "foto3.jpg" },
-          { name: "Rocio Carle", position: "Profesor", img: "foto4.jpg" },
-          { name: "Victor Fuentes", position: "Computista", img: "foto5.jpg" },
-          { name: "Luis Fuentes", position: "Economista", img: "foto6.jpg" },
-        ].map((person, index) => (
+        {aspirantes.map((person) => (
           <div
-            key={index}
+            key={person.id_applicants}
             className="person-box shadow p-3 mb-5 bg-body-tertiary rounded">
             <div className="box-avatar">
-              <img src={`src/assets/img/${person.img}`} alt={person.name} />
+              <img src={`src/assets/img/${person.image}`} alt={person.name} />
             </div>
             <div className="box-bio">
-              <h2 className="bio-name">{person.name}</h2>
-              <p className="bio-position">{person.position}</p>
+              <h2 className="bio-name">{`${person.first_name} ${person.last_name}`}</h2>
+              <p className="bio-position">{person.professions}</p>
             </div>
             <div className="box-actions">
               <button>
@@ -48,4 +39,4 @@ const Applicants = () => {
   );
 };
 
-export default Applicants;
+export default Aspirantes;

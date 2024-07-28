@@ -1,11 +1,11 @@
-import Aspirantes from "./Aspirantes";
-import Profesiones from "./Profesiones";
+import Aspirantes from './Aspirantes';
+import Profesiones from './Profesiones';
 
 const ContentWrap = () => {
   return (
     <>
       <header className="preventa">
-        <h2 className="text-2xl">Búsqueda y selección</h2>
+        <h2 className="text-2xl text-center pb-2">Búsqueda y selección</h2>
         <p className="text-center text-lg">
           Encontramos talento para tu empresa, en todos los cargos
           administrativos, profesionales y técnicos.
@@ -14,8 +14,8 @@ const ContentWrap = () => {
           <img src="src/assets/img/banner.jpg" alt="Recursos Humanos" />
         </div>
       </header>
-      <Aspirantes />
       <Profesiones />
+      <Aspirantes />
     </>
   );
 };
