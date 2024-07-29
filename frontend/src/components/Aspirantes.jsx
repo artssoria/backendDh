@@ -19,7 +19,9 @@ const Aspirantes = () => {
             </div>
             <div className="box-bio">
               <h2 className="bio-name">{`${person.first_name} ${person.last_name}`}</h2>
-              <p className="bio-position">{person.professions}</p>
+              <p className="bio-position">
+                {person.professions || 'default-image.jpg'}
+              </p>
             </div>
             <div className="box-actions">
               <button>
